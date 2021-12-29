@@ -1,0 +1,7 @@
+{
+  "name": "Shard",
+  "author": "devlaq",
+  "main": "com.github.devlaq.shard.Main",
+  "description": "Anti-grief, Vote kick/ban/map and, more",
+  "version": "0.01.2"
+}
