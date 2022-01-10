@@ -6,6 +6,8 @@ Currently used in Shard Korea server.
 # Features
 Features of this plugin.
 
+The plugin supports korean only now.
+
 ### Commands
 - [X] /vote <kick/map/skipwave/gameover> [targetPlayer/targetMap/targetWave] command
   - Vote for kicking player, changing map, skipping wave, gameover.
@@ -18,6 +20,9 @@ Features of this plugin.
 
 ### Others
 - [X] Discord chat linking
+- [X] Pause game when nobody playing the server
+- [X] Broadcast warning when player building reactor near core
+- 
 
 # Plans
 - [ ] Permission managing
