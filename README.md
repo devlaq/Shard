@@ -1,6 +1,8 @@
 # Shard
 Shard is a plugin that includes many features.
 
+Currently used in Shard Korea server.
+
 # Features
 Features of this plugin.
 
