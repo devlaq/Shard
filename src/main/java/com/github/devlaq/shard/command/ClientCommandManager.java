@@ -5,7 +5,7 @@ import arc.util.CommandHandler;
 
 public class ClientCommandManager {
 
-    private CommandHandler handler;
+    public CommandHandler handler;
 
     public ClientCommandManager(CommandHandler handler) {
         this.handler = handler;

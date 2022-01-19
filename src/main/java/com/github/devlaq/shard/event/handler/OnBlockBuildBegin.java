@@ -2,8 +2,8 @@ package com.github.devlaq.shard.event.handler;
 
 import arc.func.Cons;
 import arc.math.geom.Vec2;
-import com.github.devlaq.shard.Me;
-import com.github.devlaq.shard.Utils;
+import com.github.devlaq.shard.core.Me;
+import com.github.devlaq.shard.util.Utils;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.game.EventType;
@@ -30,8 +30,7 @@ public class OnBlockBuildBegin implements Cons<EventType.BlockBuildBeginEvent> {
                     }
                 }
             }
-            if(nearestCore == null) Me.broadcast("주의! 플레이어 @이(가) 토륨 원자로를 설치하고 있습니다! 위치: (@, @) | 가장 가까운 코어 없음", player.name(), player.tileX(), player.tileY());
-            else Me.broadcast("주의! 플레이어 @이(가) 토륨 원자로를 설치하고 있습니다! 위치: (@, @) | 가장 가까운 코어: (@, @, 거리 @)", player.name(), player.tileX(), player.tileY(), nearestCore.x, nearestCore.y, nearest);
+            Me.broadcast("@이(가) @, @에 Thorium Reactor를 설치하고 있습니다!");
         }
     }
 

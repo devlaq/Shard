@@ -1,4 +1,4 @@
-package com.github.devlaq.shard;
+package com.github.devlaq.shard.core;
 
 import arc.Core;
 import arc.util.Strings;
@@ -8,6 +8,10 @@ import mindustry.gen.Player;
 import mindustry.gen.Playerc;
 
 public class Me {
+
+    public static String format(String text, Object... args) {
+        return Strings.format(text, args);
+    }
 
     public static void message(Player player, String prefix, String message, Object... args) {
         player.sendMessage(Strings.format(prefix + message, args));
@@ -38,7 +42,7 @@ public class Me {
     }
 
     public static void discord(String user, String message, Object... args) {
-        Groups.player.forEach(p -> message(p, "[blue]Discord[] [yellow]@[]: @", user, message, args));
+        Groups.player.forEach(p -> p.sendMessage(format("[blue]Discord[] [yellow]@[]: @", user, message, args)));
     }
 
     public static void infoPopup(String message, float duration, int align, int top, int left, int bottom, int right) {
