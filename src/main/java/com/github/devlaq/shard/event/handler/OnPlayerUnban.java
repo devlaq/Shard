@@ -30,6 +30,7 @@ public class OnPlayerUnban implements Cons<EventType.PlayerUnbanEvent> {
 
         JsonObject discordConfiguration = Global.configuration.getAsJsonObject("discord");
         if(discordConfiguration == null) return;
+        if(!discordConfiguration.get("enabled").getAsBoolean()) return;
         JsonArray banLogChannels = discordConfiguration.getAsJsonObject("channels").getAsJsonArray("banLogChannels");
         JsonArray allLogChannels = discordConfiguration.getAsJsonObject("channels").getAsJsonArray("allLogChannels");
         JsonArray targetChannels = new JsonArray();

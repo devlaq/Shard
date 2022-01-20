@@ -33,16 +33,13 @@ public class OnPlayerBan implements Cons<EventType.PlayerBanEvent> {
         String playerId = playerInfo != null ? playerInfo.id : "ID Unknown";
 
         JsonObject discordConfiguration = Global.configuration.getAsJsonObject("discord");
-        Log.info("Reach :A");
         if(discordConfiguration == null) return;
+        if(!discordConfiguration.get("enabled").getAsBoolean()) return;
         JsonArray banLogChannels = discordConfiguration.getAsJsonObject("channels").getAsJsonArray("banLogChannels");
         JsonArray allLogChannels = discordConfiguration.getAsJsonObject("channels").getAsJsonArray("allLogChannels");
         JsonArray targetChannels = new JsonArray();
-        Log.info("Reach :B");
         if(banLogChannels != null) targetChannels.addAll(banLogChannels);
-        Log.info("Reach :C");
         if(allLogChannels != null) targetChannels.addAll(allLogChannels);
-        Log.info("Reach :D");
         EmbedCreateSpec.Builder builder = EmbedCreateSpec.builder();
         builder.title("User Banned");
         builder.description("User banned by administrator");
@@ -53,13 +50,10 @@ public class OnPlayerBan implements Cons<EventType.PlayerBanEvent> {
         EmbedCreateSpec embed = builder.build();
         Log.info(banLogChannels);
         for(JsonElement jsonChannel : targetChannels) {
-            Log.info("Reach :E");
             String channelID = jsonChannel.getAsString();
             Channel channel = Discord.gateway.getChannelById(Snowflake.of(channelID)).block();
             if(!(channel instanceof MessageChannel messageChannel)) continue;
-            Log.info("Reach :F");
             messageChannel.createMessage(embed).block();
-            Log.info("Ban log sent to: @, EMBED: @", messageChannel.getId(), embed.toString());
         }
     }
 
