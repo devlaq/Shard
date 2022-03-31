@@ -2,6 +2,7 @@ package com.github.devlaq.shard
 
 import arc.Events
 import arc.func.Cons
+import arc.func.Cons2
 import arc.struct.Seq
 
 class EventHandlers : Module(null) {
@@ -10,8 +11,11 @@ class EventHandlers : Module(null) {
 
     private val handlers: Seq<Cons<Any>> = Seq()
 
+    var eventRegistrar: Cons2<Class<Any>, Cons<Any>>? = null
+    var eventRemover: Cons2<Class<Any>, Cons<Any>>? = null
+
     override fun name(): String {
-        return "event_handler"
+        return "EventHandlers"
     }
 
     override fun enable() {
@@ -30,12 +34,12 @@ class EventHandlers : Module(null) {
 
     fun register(clazz: Class<Any>, handler: Cons<Any>) {
         handlers.add(handler)
-        Events.on(clazz, handler)
+        eventRegistrar?.get(clazz, handler)
     }
 
-    fun unregister(clazz: Class<Any>, handler: Cons<Any>) {
+    fun remove(clazz: Class<Any>, handler: Cons<Any>) {
         handlers.remove(handler)
-        Events.remove(clazz, handler)
+        eventRemover?.get(clazz, handler)
     }
 
 }
