@@ -1,9 +1,9 @@
 package com.github.devlaq.shard
 
 import arc.func.Func
+import arc.func.Func2
 import arc.struct.Seq
 import arc.util.CommandHandler
-import mindustry.game.EventType
 import mindustry.gen.Player
 
 class Commands(core: ShardCore?) : Module(core) {
@@ -13,16 +13,16 @@ class Commands(core: ShardCore?) : Module(core) {
 
     var enabled = false
 
-    var clientCommandHandler: Func<EventType.PlayerChatEvent, CommandHandler.CommandResponse> = Func { event ->
-        if(!enabled) return@Func CommandHandler.CommandResponse(CommandHandler.ResponseType.noCommand, null, null)
-        val args = Seq(event.message.substring(0, 1).split(" ").toTypedArray())
+    var clientCommandHandler: Func2<AbstractUser, String, CommandHandler.CommandResponse> = Func2 { user, message ->
+        if(!enabled) return@Func2 CommandHandler.CommandResponse(CommandHandler.ResponseType.noCommand, null, null)
+        val args = Seq(message.substring(0, 1).split(" ").toTypedArray())
 
         val command = findClientCommand(args[0])
         if(command != null) {
             command.run(null, args)
-            return@Func CommandHandler.CommandResponse(CommandHandler.ResponseType.valid, command.asCommand(), args[0])
+            return@Func2 CommandHandler.CommandResponse(CommandHandler.ResponseType.valid, command.asCommand(), args[0])
         } else {
-            return@Func CommandHandler.CommandResponse(CommandHandler.ResponseType.unknownCommand, null, args[0])
+            return@Func2 CommandHandler.CommandResponse(CommandHandler.ResponseType.unknownCommand, null, args[0])
         }
     }
 
@@ -39,12 +39,12 @@ class Commands(core: ShardCore?) : Module(core) {
         }
     }
 
-    fun handleClientCommand(event: EventType.PlayerChatEvent): CommandHandler.CommandResponse {
-        return clientCommandHandler.get(event)
+    fun handleClientCommand(user: AbstractUser, message: String): CommandHandler.CommandResponse {
+        return clientCommandHandler.get(user, message)
     }
 
-    fun handleServerCommand(string: String): CommandHandler.CommandResponse {
-        return serverCommandHandler.get(string)
+    fun handleServerCommand(message: String): CommandHandler.CommandResponse {
+        return serverCommandHandler.get(message)
     }
 
     fun findClientCommand(name: String): Command<Player>? {
